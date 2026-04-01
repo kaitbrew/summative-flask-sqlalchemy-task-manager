@@ -1,10 +1,11 @@
-import { useState, useEffect, useCallback,startTransition } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { fetcher } from "./api/fetcher";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import ProjectList from "./components/ProjectList";
 import TaskList from "./components/TaskList";
 import FormModal from "./components/FormModal";
+import "./app.css";
 
 export default function App() {
   const [projects, setProjects] = useState([]);
@@ -13,35 +14,25 @@ export default function App() {
   const [modal, setModal] = useState(null);
   const [loadingTasks, setLoadingTasks] = useState(false);
 
-    const loadProjects = useCallback(async () => {
+  const loadProjects = useCallback(async () => {
     const data = await fetcher("/projects");
     setProjects(data);
   }, []);
 
-  const loadTasks = useCallback(async (projectId) => {
-    setLoadingTasks(true);
-    const data = await fetcher(`/projects/${projectId}/tasks`);
-    setTasks(data);
-    setLoadingTasks(false);
-  }, []);
+const loadTasks = useCallback(async (projectId) => {
+  setLoadingTasks(true);
+  const data = await fetcher(`/projects/${projectId}/tasks`);
+  setTasks(data);
+  setLoadingTasks(false);
+}, []);
 
-  useEffect(() => {
-    startTransition(() => {
-      loadProjects();
-    });
-  }, [loadProjects]);
-
-  useEffect(() => {
-    if (selectedProject) {
-      startTransition(() => {
-        loadTasks(selectedProject.id);
-      });
-    } else {
-      startTransition(() => {
-        setTasks({ pending: [], complete: [] });
-      });
-    }
-  }, [selectedProject, loadTasks]);
+useEffect(() => {
+  if (selectedProject?.id) {
+    loadTasks(selectedProject.id);
+  } else {
+    setTasks({ pending: [], complete: [] });
+  }
+}, [selectedProject]);
 
   const handleToggle = async (taskId) => {
     await fetcher(`/tasks/${taskId}/toggle`, { method: "PATCH" });
@@ -75,10 +66,9 @@ export default function App() {
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100vh", overflow: "hidden" }}>
+    <div className="app">
       <Header />
-
-      <div style={{ display: "flex", flex: 1, overflow: "hidden" }}>
+      <div className="app-body">
         <ProjectList
           projects={projects}
           selectedProject={selectedProject}
@@ -87,7 +77,6 @@ export default function App() {
           onEdit={(p) => setModal({ type: "edit-project", project: p })}
           onDelete={handleDeleteProject}
         />
-
         <TaskList
           project={selectedProject}
           tasks={tasks}
@@ -98,25 +87,12 @@ export default function App() {
           onDelete={handleDeleteTask}
         />
       </div>
-
       <Footer />
-
       {(modal?.type === "add-project" || modal?.type === "edit-project") && (
-        <FormModal
-          type="project"
-          initial={modal.project}
-          onSave={onProjectSaved}
-          onClose={closeModal}
-        />
+        <FormModal type="project" initial={modal.project} onSave={onProjectSaved} onClose={closeModal} />
       )}
       {(modal?.type === "add-task" || modal?.type === "edit-task") && (
-        <FormModal
-          type="task"
-          projectId={selectedProject?.id}
-          initial={modal.task}
-          onSave={onTaskSaved}
-          onClose={closeModal}
-        />
+        <FormModal type="task" projectId={selectedProject?.id} initial={modal.task} onSave={onTaskSaved} onClose={closeModal} />
       )}
     </div>
   );
