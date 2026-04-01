@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import "../confirmmodal.css";
+import "./confirmmodal.css";
 
 export default function ConfirmModal({ message, onConfirm, onClose }) {
   useEffect(() => {

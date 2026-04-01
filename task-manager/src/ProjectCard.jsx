@@ -1,4 +1,4 @@
-import "../projectcard.css";
+import "./projectcard.css";
 
 const formatDate = (iso) => {
   if (!iso) return "";

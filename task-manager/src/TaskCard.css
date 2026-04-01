@@ -1,0 +1,61 @@
+.task-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  margin-bottom: 6px;
+}
+
+.task-card:hover {
+  border-color: var(--coral-muted);
+}
+
+.task-card-checkbox {
+  margin-top: 3px;
+  cursor: pointer;
+  flex-shrink: 0;
+  accent-color: var(--coral);
+}
+
+.task-card-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.task-card-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.task-card--done .task-card-title {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.task-card-description {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.task-card-timestamps {
+  display: flex;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.task-card-timestamps span {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.task-card-actions {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
