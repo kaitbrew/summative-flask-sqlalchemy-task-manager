@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { fetcher } from "../api/fetcher";
+import { fetcher } from "./api/fetcher";
 
 const EMPTY = { title: "", description: "" };
 

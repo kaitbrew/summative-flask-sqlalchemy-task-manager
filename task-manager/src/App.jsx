@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { fetcher } from "./fetcher";
+import { fetcher } from "./api/fetcher";
 import Header from "./Header";
 import Footer from "./Footer";
 import ProjectList from "./ProjectList";
