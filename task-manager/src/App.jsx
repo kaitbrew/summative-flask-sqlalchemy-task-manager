@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback } from "react";
-import { fetcher } from "./api/fetcher";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import ProjectList from "./components/ProjectList";
-import TaskList from "./components/TaskList";
-import FormModal from "./components/FormModal";
+import { fetcher } from "./fetcher";
+import Header from "./Header";
+import Footer from "./Footer";
+import ProjectList from "./ProjectList";
+import TaskList from "./TaskList";
+import FormModal from "./FormModal";
 import "./app.css";
 
 export default function App() {
