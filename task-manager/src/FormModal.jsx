@@ -1,21 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { fetcher } from "../api/fetcher";
-import Modal from "./Modal";
 
 const EMPTY = { title: "", description: "" };
 
 function FormField({ label, value, onChange, multiline }) {
-  const shared = {
-    value,
-    onChange: (e) => onChange(e.target.value),
-    style: { width: "100%", boxSizing: "border-box", marginTop: "4px", display: "block" },
-  };
   return (
-    <div style={{ marginBottom: "1rem" }}>
-      <label style={{ fontSize: "13px", color: "var(--color-text-secondary)", fontWeight: 500 }}>
-        {label}
-      </label>
-      {multiline ? <textarea {...shared} rows={3} /> : <input type="text" {...shared} />}
+    <div className="form-field">
+      <label className="form-label">{label}</label>
+      {multiline
+        ? <textarea className="form-input" rows={3} value={value} onChange={(e) => onChange(e.target.value)} />
+        : <input className="form-input" type="text" value={value} onChange={(e) => onChange(e.target.value)} />}
     </div>
   );
 }
@@ -27,6 +21,12 @@ export default function FormModal({ type, projectId, initial, onSave, onClose })
 
   const isProject = type === "project";
   const isEditing = !!initial?.id;
+
+  useEffect(() => {
+    const handler = (e) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [onClose]);
 
   const set = (key) => (val) => setForm((f) => ({ ...f, [key]: val }));
 
@@ -52,27 +52,17 @@ export default function FormModal({ type, projectId, initial, onSave, onClose })
   };
 
   return (
-    <Modal onClose={onClose}>
-      <h2 style={{ margin: "0 0 1.25rem", fontSize: "16px", fontWeight: 500 }}>
-        {isEditing ? `Edit ${type}` : `New ${type}`}
-      </h2>
-      <FormField label="Title" value={form.title} onChange={set("title")} />
-      <FormField label="Description" value={form.description || ""} onChange={set("description")} multiline />
-      {error && (
-        <p style={{ color: "var(--color-text-danger)", fontSize: "13px", margin: "0 0 0.75rem" }}>
-          {error}
-        </p>
-      )}
-      <div style={{ display: "flex", gap: "8px", justifyContent: "flex-end" }}>
-        <button onClick={onClose}>Cancel</button>
-        <button
-          onClick={submit}
-          disabled={loading}
-          style={{ background: "var(--color-background-primary)", borderColor: "var(--color-border-primary)" }}
-        >
-          {loading ? "Saving…" : "Save"}
-        </button>
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <h2 className="modal-title">{isEditing ? `Edit ${type}` : `New ${type}`}</h2>
+        <FormField label="Title" value={form.title} onChange={set("title")} />
+        <FormField label="Description" value={form.description || ""} onChange={set("description")} multiline />
+        {error && <p className="form-error">{error}</p>}
+        <div className="modal-actions">
+          <button onClick={onClose}>Cancel</button>
+          <button onClick={submit} disabled={loading}>{loading ? "Saving…" : "Save"}</button>
+        </div>
       </div>
-    </Modal>
+    </div>
   );
 }
