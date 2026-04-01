@@ -1,3 +1,4 @@
+import "../formmodal.css";
 import { useState, useEffect } from "react";
 import { fetcher } from "./api/fetcher";
 

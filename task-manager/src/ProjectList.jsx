@@ -1,4 +1,5 @@
 import ProjectCard from "./ProjectCard";
+import "../projectlist.css";
 
 export default function ProjectList({ projects, selectedProject, onSelect, onAdd, onEdit, onDelete }) {
   return (

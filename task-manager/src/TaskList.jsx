@@ -1,4 +1,5 @@
 import TaskCard from "./TaskCard";
+import "../tasklist.css";
 
 function TaskSection({ title, tasks, onToggle, onEdit, onDelete }) {
   if (!tasks.length) return null;
