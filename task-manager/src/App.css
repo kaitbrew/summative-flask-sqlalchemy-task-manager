@@ -10,7 +10,7 @@ body {
   font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
   font-size: 14px;
   line-height: 1.5;
-  color: #111827;
+  color: #1a1a2e;
   background: #ffffff;
   -webkit-font-smoothing: antialiased;
 }
@@ -23,7 +23,7 @@ body {
 
 h1, h2, h3 {
   font-weight: 500;
-  color: #111827;
+  color: #1a1a2e;
 }
 
 p {
@@ -64,14 +64,14 @@ button {
   justify-content: space-between;
   padding: 0 1.5rem;
   flex-shrink: 0;
-  border-bottom: 1px solid #e5e7eb;
-  background: #ffffff;
+  background: #DB518F;
 }
 
 .header-title {
   margin: 0;
   font-size: 15px;
   font-weight: 500;
+  color: #ffffff;
 }
 
 .header-nav {
@@ -81,12 +81,12 @@ button {
 
 .header-nav-link {
   font-size: 13px;
+  color: rgba(255, 255, 255, 0.85);
   text-decoration: none;
-  color: #6b7280;
 }
 
 .header-nav-link:hover {
-  color: #111827;
+  color: #ffffff;
 }
 
 /* ─── Footer ─────────────────────────────────────────────────────────────── */
@@ -97,14 +97,13 @@ button {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  border-top: 1px solid #e5e7eb;
-  background: #ffffff;
+  background: #DB518F;
 }
 
 .footer-text {
   margin: 0;
   font-size: 12px;
-  color: #9ca3af;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 /* ─── Project list ───────────────────────────────────────────────────────── */
@@ -114,8 +113,8 @@ button {
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  border-right: 1px solid #e5e7eb;
-  background: #f9fafb;
+  border-right: 1px solid #f0c4d8;
+  background: #fdf0f6;
 }
 
 .project-list-header {
@@ -123,13 +122,15 @@ button {
   align-items: center;
   justify-content: space-between;
   padding: 1rem 1.25rem;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid #f0c4d8;
+  background: #fae0ed;
 }
 
 .project-list-heading {
   margin: 0;
   font-size: 14px;
   font-weight: 500;
+  color: #9a2060;
 }
 
 .project-list-body {
@@ -150,12 +151,12 @@ button {
 }
 
 .project-card:hover {
-  background: #f3f4f6;
+  background: #fae0ed;
 }
 
 .project-card--selected {
   background: #ffffff;
-  border-color: #d1d5db;
+  border-color: #DB518F;
 }
 
 .project-card--selected:hover {
@@ -174,17 +175,29 @@ button {
   font-weight: 500;
   flex: 1;
   padding-right: 8px;
+  color: #1a1a2e;
 }
 
 .project-card-description {
   margin: 3px 0 0;
   font-size: 12px;
-  color: #6b7280;
+  color: #7a7a8c;
 }
 
 .project-card-actions {
   display: flex;
   gap: 4px;
+}
+
+.project-card-timestamps {
+  display: flex;
+  gap: 12px;
+  margin-top: 5px;
+}
+
+.project-card-timestamps span {
+  font-size: 11px;
+  color: #b07090;
 }
 
 /* ─── Task list ──────────────────────────────────────────────────────────── */
@@ -208,25 +221,28 @@ button {
   align-items: center;
   justify-content: space-between;
   padding: 1rem 1.5rem;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid #b8e8f0;
+  background: #edf8fb;
 }
 
 .task-list-heading {
   margin: 0;
   font-size: 15px;
   font-weight: 500;
+  color: #1a6070;
 }
 
 .task-list-description {
   margin: 2px 0 0;
   font-size: 13px;
-  color: #6b7280;
+  color: #4a8a98;
 }
 
 .task-list-body {
   flex: 1;
   overflow-y: auto;
   padding: 1.25rem 1.5rem;
+  background: #f7fdfe;
 }
 
 /* ─── Task section ───────────────────────────────────────────────────────── */
@@ -241,7 +257,7 @@ button {
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #6b7280;
+  color: #7ACDDB;
 }
 
 /* ─── Task card ──────────────────────────────────────────────────────────── */
@@ -251,16 +267,21 @@ button {
   align-items: flex-start;
   gap: 10px;
   padding: 10px 12px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid #b8e8f0;
   border-radius: 6px;
   background: #ffffff;
   margin-bottom: 6px;
+}
+
+.task-card:hover {
+  border-color: #7ACDDB;
 }
 
 .task-card-checkbox {
   margin-top: 3px;
   cursor: pointer;
   flex-shrink: 0;
+  accent-color: #7ACDDB;
 }
 
 .task-card-body {
@@ -272,6 +293,7 @@ button {
   margin: 0;
   font-size: 14px;
   font-weight: 500;
+  color: #1a1a2e;
 }
 
 .task-card--done .task-card-title {
@@ -282,7 +304,18 @@ button {
 .task-card-description {
   margin: 2px 0 0;
   font-size: 13px;
-  color: #6b7280;
+  color: #7a7a8c;
+}
+
+.task-card-timestamps {
+  display: flex;
+  gap: 12px;
+  margin-top: 5px;
+}
+
+.task-card-timestamps span {
+  font-size: 11px;
+  color: #7ACDDB;
 }
 
 .task-card-actions {
@@ -296,7 +329,7 @@ button {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.35);
+  background: rgba(219, 81, 143, 0.18);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -306,7 +339,7 @@ button {
 
 .modal-content {
   background: #ffffff;
-  border: 1px solid #e5e7eb;
+  border: 1px solid #f0c4d8;
   border-radius: 10px;
   padding: 1.5rem;
   width: 100%;
@@ -317,6 +350,7 @@ button {
   margin: 0 0 1.25rem;
   font-size: 16px;
   font-weight: 500;
+  color: #DB518F;
 }
 
 .modal-actions {
@@ -336,7 +370,7 @@ button {
   display: block;
   font-size: 13px;
   font-weight: 500;
-  color: #6b7280;
+  color: #7a7a8c;
   margin-bottom: 4px;
 }
 
@@ -346,15 +380,15 @@ button {
   padding: 6px 9px;
   font-size: 13px;
   font-family: inherit;
-  border: 1px solid #d1d5db;
+  border: 1px solid #f0c4d8;
   border-radius: 6px;
   background: #ffffff;
-  color: #111827;
+  color: #1a1a2e;
 }
 
 .form-input:focus {
   outline: none;
-  border-color: #6b7280;
+  border-color: #DB518F;
 }
 
 .form-error {
@@ -368,15 +402,15 @@ button {
 button {
   font-size: 12px;
   padding: 4px 10px;
-  border: 1px solid #d1d5db;
+  border: 1px solid #7ACDDB;
   border-radius: 6px;
   background: transparent;
   cursor: pointer;
-  color: #374151;
+  color: #1a6070;
 }
 
 button:hover {
-  background: #f3f4f6;
+  background: #edf8fb;
 }
 
 button:disabled {
@@ -393,6 +427,14 @@ button:disabled {
   background: #fef2f2;
 }
 
+/* ─── Confirm modal ──────────────────────────────────────────────────────── */
+
+.confirm-message {
+  font-size: 14px;
+  color: #7a7a8c;
+  margin-bottom: 1.25rem;
+}
+
 /* ─── Shared ─────────────────────────────────────────────────────────────── */
 
 .empty-message {
@@ -400,27 +442,4 @@ button:disabled {
   color: #9ca3af;
   text-align: center;
   margin-top: 2rem;
-}
-
-/* ─── Timestamps ─────────────────────────────────────────────────────────── */
-
-.project-card-timestamps,
-.task-card-timestamps {
-  display: flex;
-  gap: 12px;
-  margin-top: 5px;
-}
-
-.project-card-timestamps span,
-.task-card-timestamps span {
-  font-size: 11px;
-  color: #9ca3af;
-}
-
-/* ─── Confirm modal ──────────────────────────────────────────────────────── */
-
-.confirm-message {
-  font-size: 14px;
-  color: #6b7280;
-  margin-bottom: 1.25rem;
 }
