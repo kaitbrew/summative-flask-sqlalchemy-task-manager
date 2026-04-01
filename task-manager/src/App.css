@@ -401,3 +401,26 @@ button:disabled {
   text-align: center;
   margin-top: 2rem;
 }
+
+/* ─── Timestamps ─────────────────────────────────────────────────────────── */
+
+.project-card-timestamps,
+.task-card-timestamps {
+  display: flex;
+  gap: 12px;
+  margin-top: 5px;
+}
+
+.project-card-timestamps span,
+.task-card-timestamps span {
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+/* ─── Confirm modal ──────────────────────────────────────────────────────── */
+
+.confirm-message {
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 1.25rem;
+}
