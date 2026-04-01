@@ -1,121 +1,123 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useState, useEffect, useCallback,startTransition } from "react";
+import { fetcher } from "./api/fetcher";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import ProjectList from "./components/ProjectList";
+import TaskList from "./components/TaskList";
+import FormModal from "./components/FormModal";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [projects, setProjects] = useState([]);
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [tasks, setTasks] = useState({ pending: [], complete: [] });
+  const [modal, setModal] = useState(null);
+  const [loadingTasks, setLoadingTasks] = useState(false);
+
+    const loadProjects = useCallback(async () => {
+    const data = await fetcher("/projects");
+    setProjects(data);
+  }, []);
+
+  const loadTasks = useCallback(async (projectId) => {
+    setLoadingTasks(true);
+    const data = await fetcher(`/projects/${projectId}/tasks`);
+    setTasks(data);
+    setLoadingTasks(false);
+  }, []);
+
+  useEffect(() => {
+    startTransition(() => {
+      loadProjects();
+    });
+  }, [loadProjects]);
+
+  useEffect(() => {
+    if (selectedProject) {
+      startTransition(() => {
+        loadTasks(selectedProject.id);
+      });
+    } else {
+      startTransition(() => {
+        setTasks({ pending: [], complete: [] });
+      });
+    }
+  }, [selectedProject, loadTasks]);
+
+  const handleToggle = async (taskId) => {
+    await fetcher(`/tasks/${taskId}/toggle`, { method: "PATCH" });
+    loadTasks(selectedProject.id);
+  };
+
+  const handleDeleteTask = async (taskId) => {
+    await fetcher(`/tasks/${taskId}`, { method: "DELETE" });
+    loadTasks(selectedProject.id);
+  };
+
+  const handleDeleteProject = async (projectId) => {
+    await fetcher(`/projects/${projectId}`, { method: "DELETE" });
+    if (selectedProject?.id === projectId) setSelectedProject(null);
+    loadProjects();
+  };
+
+  const closeModal = () => setModal(null);
+
+  const onProjectSaved = (saved) => {
+    closeModal();
+    loadProjects();
+    if (saved && selectedProject?.id === saved.id) {
+      setSelectedProject((prev) => ({ ...prev, ...saved }));
+    }
+  };
+
+  const onTaskSaved = () => {
+    closeModal();
+    loadTasks(selectedProject.id);
+  };
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <div style={{ display: "flex", flexDirection: "column", height: "100vh", overflow: "hidden" }}>
+      <Header />
 
-      <div className="ticks"></div>
+      <div style={{ display: "flex", flex: 1, overflow: "hidden" }}>
+        <ProjectList
+          projects={projects}
+          selectedProject={selectedProject}
+          onSelect={setSelectedProject}
+          onAdd={() => setModal({ type: "add-project" })}
+          onEdit={(p) => setModal({ type: "edit-project", project: p })}
+          onDelete={handleDeleteProject}
+        />
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+        <TaskList
+          project={selectedProject}
+          tasks={tasks}
+          loadingTasks={loadingTasks}
+          onAddTask={() => setModal({ type: "add-task" })}
+          onToggle={handleToggle}
+          onEdit={(t) => setModal({ type: "edit-task", task: t })}
+          onDelete={handleDeleteTask}
+        />
+      </div>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+      <Footer />
+
+      {(modal?.type === "add-project" || modal?.type === "edit-project") && (
+        <FormModal
+          type="project"
+          initial={modal.project}
+          onSave={onProjectSaved}
+          onClose={closeModal}
+        />
+      )}
+      {(modal?.type === "add-task" || modal?.type === "edit-task") && (
+        <FormModal
+          type="task"
+          projectId={selectedProject?.id}
+          initial={modal.task}
+          onSave={onTaskSaved}
+          onClose={closeModal}
+        />
+      )}
+    </div>
+  );
 }
-
-export default App
