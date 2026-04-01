@@ -11,7 +11,7 @@ export default function Header() {
       flexShrink: 0,
     }}>
       <p style={{ margin: 0, fontSize: "15px", fontWeight: 500, color: "var(--color-text-primary)" }}>
-        Project Manager
+        KB's Project Manager
       </p>
       <nav style={{ display: "flex", gap: "1.25rem" }}>Nav Links here
       </nav>

@@ -12,7 +12,7 @@ export default function Footer() {
       flexShrink: 0,
     }}>
       <p style={{ margin: 0, fontSize: "12px", color: "var(--color-text-tertiary)" }}>
-        &copy; {year} Project Manager. All rights reserved.
+        Built by KB &copy; {year}
       </p>
     </div>
   );

@@ -15,12 +15,24 @@ with app.app_context():
 @app.route("/projects", methods=["GET"])
 def get_projects():
     projects = services.get_all_projects()
-    return jsonify([{"id": p.id, "title": p.title, "description": p.description} for p in projects])
+    return jsonify([{
+        "id": p.id,
+        "title": p.title,
+        "description": p.description,
+        "created_at": p.created_at.isoformat() if p.created_at else None,
+        "updated_at": p.updated_at.isoformat() if p.updated_at else None
+    } for p in projects])
 
 @app.route("/projects/<int:project_id>", methods=["GET"])
 def get_project(project_id):
     p = services.get_project_by_id(project_id)
-    return jsonify({"id": p.id, "title": p.title, "description": p.description})
+    return jsonify({
+        "id": p.id,
+        "title": p.title,
+        "description": p.description,
+        "created_at": p.created_at.isoformat() if p.created_at else None,
+        "updated_at": p.updated_at.isoformat() if p.updated_at else None
+    })
 
 @app.route("/projects", methods=["POST"])
 def create_project():
@@ -58,9 +70,18 @@ def delete_project(project_id):
 @app.route("/projects/<int:project_id>/tasks", methods=["GET"])
 def get_tasks(project_id):
     pending, complete = services.get_tasks_by_status(project_id)
+    def serialize(t):
+        return {
+            "id": t.id,
+            "title": t.title,
+            "description": t.description,
+            "status": t.status.value,
+            "created_at": t.created_at.isoformat() if t.created_at else None,
+            "updated_at": t.updated_at.isoformat() if t.updated_at else None
+        }
     return jsonify({
-        "pending": [{"id": t.id, "title": t.title, "description": t.description} for t in pending],
-        "complete": [{"id": t.id, "title": t.title, "description": t.description} for t in complete]
+        "pending": [serialize(t) for t in pending],
+        "complete": [serialize(t) for t in complete]
     })
 
 @app.route("/projects/<int:project_id>/tasks", methods=["POST"])
@@ -120,4 +141,4 @@ def unsupported_media_type(e):
     return jsonify({"error": "Content-Type must be application/json"}), 415
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0")

@@ -26,13 +26,19 @@ const loadTasks = useCallback(async (projectId) => {
   setLoadingTasks(false);
 }, []);
 
+
+useEffect(() => {
+  loadProjects();
+}, []); 
+
+
 useEffect(() => {
   if (selectedProject?.id) {
     loadTasks(selectedProject.id);
   } else {
     setTasks({ pending: [], complete: [] });
   }
-}, [selectedProject]);
+}, [selectedProject, loadTasks]);
 
   const handleToggle = async (taskId) => {
     await fetcher(`/tasks/${taskId}/toggle`, { method: "PATCH" });
