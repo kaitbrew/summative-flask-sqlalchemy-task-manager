@@ -1,6 +1,6 @@
-# Project & Task Manager
+# KB's Project Manager
 
-A full-stack web application for organizing work into projects and tasks. Each project contains a list of tasks that can be tracked as either pending or complete. The interface is split into two panels — select a project on the left to view and manage its tasks on the right. Edits and additions are done in a floating menu to ensure a seamless experience.
+A full-stack web application for organizing work into projects and tasks. Each project contains a list of tasks tracked as either pending or complete. The interface is split into two panels — select a project on the left to view and manage its tasks on the right.
 
 Built with Flask on the backend and React on the frontend, communicating over a REST API.
 
@@ -10,10 +10,13 @@ Built with Flask on the backend and React on the frontend, communicating over a 
 
 - Create, edit, and delete projects with a title and description
 - Create, edit, and delete tasks within a project
-- Tasks are categorized as **pending** or **complete**
+- Tasks are categorized as pending or complete
 - Toggle task status with a checkbox
+- Confirmation dialog before any deletion
+- Created and updated timestamps displayed on projects and tasks
 - Floating modal forms — no page navigation required
 - Tasks are automatically linked to the currently selected project
+- Branded header with logo mark and navigation
 
 ---
 
@@ -51,7 +54,9 @@ npm --version
 
 The app has two parts that run simultaneously — a Flask backend and a React frontend. You will need **two terminal windows** open at the same time.
 
-### Step 1 — Clone and navigate to the project
+> **Windows (WSL) users:** Always activate the virtual environment before running any Python commands. Your prompt should show `(venv)` at the start. If it does not, run `source venv/bin/activate` first.
+
+### Step 1 — Navigate to the project
 
 ```bash
 cd summative_2
@@ -59,13 +64,13 @@ cd summative_2
 
 ### Step 2 — Set up the backend
 
-In your first terminal:
+In your **first terminal**:
 
 ```bash
 # Create a virtual environment
 python3 -m venv venv
 
-# Activate it
+# Activate it — you must do this every time you open a new terminal
 source venv/bin/activate
 
 # Install Python dependencies
@@ -80,14 +85,14 @@ python app.py
 
 Flask will be running at `http://127.0.0.1:5000`.
 
-> **Windows (WSL) users:** Flask must be started with `host="0.0.0.0"` to be reachable from your browser. In `app.py`, ensure the last line reads:
+> **WSL users:** Ensure the last line of `app.py` includes `host="0.0.0.0"` so Flask is reachable from your Windows browser:
 > ```python
 > app.run(debug=True, host="0.0.0.0")
 > ```
 
 ### Step 3 — Set up the frontend
 
-In a **second terminal**:
+In a **second terminal** (no venv needed here):
 
 ```bash
 cd summative_2/task-manager
@@ -113,16 +118,35 @@ Navigate to `http://localhost:5173` in your browser. You should see two seeded p
 
 ```
 summative_2/
-├── app.py              # Flask app and route definitions
-├── models.py           # SQLAlchemy data models
-├── services.py         # Database CRUD operations
-├── seed.py             # Script to reset and populate the database
-├── requirements.txt    # Python dependencies
-├── projects.db         # SQLite database file (auto-created on first run)
-└── task-manager/       # React frontend
+├── app.py                  # Flask app and route definitions
+├── models.py               # SQLAlchemy data models
+├── services.py             # Database CRUD operations
+├── seed.py                 # Script to reset and populate the database
+├── requirements.txt        # Python dependencies
+├── projects.db             # SQLite database file (auto-created on first run)
+└── task-manager/           # React frontend
     └── src/
-        ├── main.jsx
-        └── TaskManager.jsx
+        ├── main.jsx        # App entry point
+        ├── App.jsx         # Root component — global state and handlers
+        ├── app.css         # Global styles, variables, reset, buttons
+        ├── fetcher.js      # API utility and base URL
+        └── components/
+            ├── Header.jsx          # App header with logo and nav
+            ├── header.css
+            ├── Footer.jsx          # App footer with copyright
+            ├── footer.css
+            ├── ProjectList.jsx     # Left sidebar — list of projects
+            ├── projectlist.css
+            ├── ProjectCard.jsx     # Individual project item
+            ├── projectcard.css
+            ├── TaskList.jsx        # Right panel — tasks grouped by status
+            ├── tasklist.css
+            ├── TaskCard.jsx        # Individual task row with checkbox
+            ├── taskcard.css
+            ├── FormModal.jsx       # Floating modal for add/edit forms
+            ├── formmodal.css
+            ├── ConfirmModal.jsx    # Confirmation dialog for deletions
+            └── confirmmodal.css
 ```
 
 ---
@@ -151,7 +175,7 @@ summative_2/
 | created_at | DateTime | — | Set automatically on creation |
 | updated_at | DateTime | — | Updated automatically on save |
 
-Projects and tasks have a **one-to-many** relationship. Deleting a project permanently deletes all of its tasks.
+Projects and tasks have a one-to-many relationship. Deleting a project permanently deletes all of its tasks.
 
 ---
 
@@ -173,7 +197,7 @@ All endpoints accept and return JSON. The base URL is `http://127.0.0.1:5000`.
 
 | Method | Endpoint | Description |
 |---|---|---|
-| GET | `/projects/<id>/tasks` | Return tasks grouped by status |
+| GET | `/projects/<id>/tasks` | Return tasks grouped by status with timestamps |
 | POST | `/projects/<id>/tasks` | Create a task under a project |
 | PATCH | `/tasks/<id>` | Update a task's title or description |
 | PATCH | `/tasks/<id>/toggle` | Toggle status between pending and complete |
@@ -197,3 +221,45 @@ curl -X POST http://127.0.0.1:5000/projects/1/tasks \
 
 # Toggle a task between pending and complete
 curl -X PATCH http://127.0.0.1:5000/tasks/1/toggle
+```
+
+---
+
+## Development
+
+### Reset the database
+
+Running `seed.py` drops all tables, recreates them, and inserts fresh sample data. Use this any time you want a clean slate. Make sure your venv is active first:
+
+```bash
+source venv/bin/activate
+python seed.py
+```
+
+### Update Python dependencies
+
+After installing new packages, regenerate `requirements.txt`:
+
+```bash
+pip freeze > requirements.txt
+```
+
+### Changing ports
+
+If you need to run Flask on a different port, update the `API` constant in `fetcher.js`:
+
+```javascript
+export const API = "http://localhost:YOUR_PORT";
+```
+
+### CORS
+
+Flask-CORS is configured to allow all origins in development. This is intentional for local development but should be restricted to specific origins before deploying to production.
+
+### Debug mode
+
+Flask is currently running with `debug=True`, which enables auto-reload on file changes and detailed error pages. Turn this off before deploying to production:
+
+```python
+app.run(debug=False, host="0.0.0.0")
+```
