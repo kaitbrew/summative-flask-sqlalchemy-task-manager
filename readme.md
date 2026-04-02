@@ -105,7 +105,7 @@ The app will be available at `http://localhost:5173`.
 
 ### Step 4 — Open the app
 
-Navigate to `http://localhost:5173` in your browser. You should see two seeded projects with tasks already loaded. Select a project on the left to view its tasks on the right.
+Navigate to `http://localhost:5173` in your browser. If you used the seed file, you should see two seeded projects with tasks already loaded. Select a project on the left to view its tasks on the right, or add your own!
 
 ---
 
@@ -195,10 +195,6 @@ Projects and tasks have a one-to-many relationship. Deleting a project permanent
 
 ---
 
-## API Reference
-
-All endpoints accept and return JSON. The base URL is `http://127.0.0.1:5000`.
-
 ### Projects
 
 | Method | Endpoint | Description |
@@ -237,45 +233,4 @@ curl -X POST http://127.0.0.1:5000/projects/1/tasks \
 
 # Toggle a task between pending and complete
 curl -X PATCH http://127.0.0.1:5000/tasks/1/toggle
-```
-
----
-
-## Development
-
-### Reset the database
-
-Running `seed.py` drops all tables, recreates them, and inserts fresh sample data. Use this any time you want a clean slate. Make sure your venv is active first:
-
-```bash
-source venv/bin/activate
-python seed.py
-```
-
-### Update Python dependencies
-
-After installing new packages, regenerate `requirements.txt`:
-
-```bash
-pip freeze > requirements.txt
-```
-
-### Changing ports
-
-If you need to run Flask on a different port, update the `API` constant in `fetcher.js`:
-
-```javascript
-export const API = "http://localhost:YOUR_PORT";
-```
-
-### CORS
-
-Flask-CORS is configured to allow all origins in development. This is intentional for local development but should be restricted to specific origins before deploying to production.
-
-### Debug mode
-
-Flask is currently running with `debug=True`, which enables auto-reload on file changes and detailed error pages. Turn this off before deploying to production:
-
-```python
-app.run(debug=False, host="0.0.0.0")
 ```
