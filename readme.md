@@ -191,6 +191,8 @@ Projects and tasks have a one-to-many relationship. Deleting a project permanent
 
 ---
 
+## API Reference
+
 ### Projects
 
 | Method | Endpoint | Description |
