@@ -112,57 +112,52 @@ Navigate to `http://localhost:5173` in your browser. If you used the seed file, 
 ## Project Structure
 
 ```
+Directory structure:
 └── summative_2/
     ├── app.py
-    ├── instance/
-    │   └── projects.db
-    ├── models.py
+    ├── eslint.config.js
+    ├── index.html
+    ├── package-lock.json
+    ├── package.json
+    ├── public/
+    │   ├── favicon.svg
+    │   └── icons.svg
     ├── readme.md
     ├── requirements.txt
     ├── seed.py
     ├── services.py
-    ├── task-manager/
-    │   ├── eslint.config.js
-    │   ├── index.html
-    │   ├── package-lock.json
-    │   ├── package.json
-    │   ├── public/
+    ├── src/
+    │   ├── api/
+    │   │   └── fetcher.js
+    │   ├── App.css
+    │   ├── App.jsx
+    │   ├── assets/
     │   │   ├── favicon.svg
-    │   │   └── icons.svg
-    │   ├── src/
-    │   │   ├── api/
-    │   │   │   └── fetcher.js
-    │   │   ├── App.css
-    │   │   ├── App.jsx.jsx
-    │   │   ├── assets/
-    │   │   │   ├── favicon.svg
-    │   │   │   ├── hero.png
-    │   │   │   ├── react.svg
-    │   │   │   └── vite.svg
-    │   │   ├── ConfirmModal.css
-    │   │   ├── ConfirmModal.jsx.jsx
-    │   │   ├── Footer.css
-    │   │   ├── Footer.jsx.jsx
-    │   │   ├── FormModal.css
-    │   │   ├── FormModal.jsx.jsx
-    │   │   ├── Header.css
-    │   │   ├── Header.jsx.jsx
-    │   │   ├── main.jsx
-    │   │   ├── ProjectCard.css
-    │   │   ├── ProjectCard.jsx.jsx
-    │   │   ├── ProjectList.css
-    │   │   ├── ProjectList.jsx.jsx
-    │   │   ├── TaskCard.css
-    │   │   ├── TaskCard.jsx.jsx
-    │   │   ├── TaskList.css
-    │   │   └── TaskList.jsx.jsx
-    │   └── vite.config.js
+    │   │   ├── hero.png
+    │   │   ├── react.svg
+    │   │   └── vite.svg
+    │   ├── ConfirmModal.css
+    │   ├── ConfirmModal.jsx
+    │   ├── Footer.css
+    │   ├── Footer.jsx
+    │   ├── FormModal.css
+    │   ├── FormModal.jsx
+    │   ├── Header.css
+    │   ├── Header.jsx
+    │   ├── main.jsx
+    │   ├── ProjectCard.css
+    │   ├── ProjectCard.jsx
+    │   ├── ProjectList.css
+    │   ├── ProjectList.jsx
+    │   ├── TaskCard.css
+    │   ├── TaskCard.jsx
+    │   ├── TaskList.css
+    │   └── TaskList.jsx
     ├── venv/
 
+    ├── vite.config.js
     └── __pycache__/
-        ├── app.cpython-312.pyc
-        ├── models.cpython-312.pyc
-        └── services.cpython-312.pyc
+
 ```
 
 ---
