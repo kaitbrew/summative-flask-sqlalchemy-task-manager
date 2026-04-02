@@ -1,5 +1,7 @@
 # KB's Project Manager
 
+I tried to deploy this on Pages, but it doesn't accept JSX. The instructions below should make it easy to start up, though.
+
 A full-stack web application for organizing work into projects and tasks. Each project contains a list of tasks tracked as either pending or complete. The interface is split into two panels — select a project on the left to view and manage its tasks on the right.
 
 Built with Flask on the backend and React on the frontend, communicating over a REST API.
