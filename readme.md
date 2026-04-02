@@ -90,7 +90,6 @@ Flask will be running at `http://127.0.0.1:5000`.
 In a **second terminal** (no venv needed here):
 
 ```bash
-cd summative_2/task-manager
 
 # Install Node dependencies
 npm install
