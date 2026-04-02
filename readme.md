@@ -85,11 +85,6 @@ python app.py
 
 Flask will be running at `http://127.0.0.1:5000`.
 
-> **WSL users:** Ensure the last line of `app.py` includes `host="0.0.0.0"` so Flask is reachable from your Windows browser:
-> ```python
-> app.run(debug=True, host="0.0.0.0")
-> ```
-
 ### Step 3 — Set up the frontend
 
 In a **second terminal** (no venv needed here):
@@ -117,36 +112,57 @@ Navigate to `http://localhost:5173` in your browser. You should see two seeded p
 ## Project Structure
 
 ```
-summative_2/
-├── app.py                  # Flask app and route definitions
-├── models.py               # SQLAlchemy data models
-├── services.py             # Database CRUD operations
-├── seed.py                 # Script to reset and populate the database
-├── requirements.txt        # Python dependencies
-├── projects.db             # SQLite database file (auto-created on first run)
-└── task-manager/           # React frontend
-    └── src/
-        ├── main.jsx        # App entry point
-        ├── App.jsx         # Root component — global state and handlers
-        ├── app.css         # Global styles, variables, reset, buttons
-        ├── fetcher.js      # API utility and base URL
-        └── components/
-            ├── Header.jsx          # App header with logo and nav
-            ├── header.css
-            ├── Footer.jsx          # App footer with copyright
-            ├── footer.css
-            ├── ProjectList.jsx     # Left sidebar — list of projects
-            ├── projectlist.css
-            ├── ProjectCard.jsx     # Individual project item
-            ├── projectcard.css
-            ├── TaskList.jsx        # Right panel — tasks grouped by status
-            ├── tasklist.css
-            ├── TaskCard.jsx        # Individual task row with checkbox
-            ├── taskcard.css
-            ├── FormModal.jsx       # Floating modal for add/edit forms
-            ├── formmodal.css
-            ├── ConfirmModal.jsx    # Confirmation dialog for deletions
-            └── confirmmodal.css
+└── summative_2/
+    ├── app.py
+    ├── instance/
+    │   └── projects.db
+    ├── models.py
+    ├── readme.md
+    ├── requirements.txt
+    ├── seed.py
+    ├── services.py
+    ├── task-manager/
+    │   ├── eslint.config.js
+    │   ├── index.html
+    │   ├── package-lock.json
+    │   ├── package.json
+    │   ├── public/
+    │   │   ├── favicon.svg
+    │   │   └── icons.svg
+    │   ├── src/
+    │   │   ├── api/
+    │   │   │   └── fetcher.js
+    │   │   ├── App.css
+    │   │   ├── App.jsx.jsx
+    │   │   ├── assets/
+    │   │   │   ├── favicon.svg
+    │   │   │   ├── hero.png
+    │   │   │   ├── react.svg
+    │   │   │   └── vite.svg
+    │   │   ├── ConfirmModal.css
+    │   │   ├── ConfirmModal.jsx.jsx
+    │   │   ├── Footer.css
+    │   │   ├── Footer.jsx.jsx
+    │   │   ├── FormModal.css
+    │   │   ├── FormModal.jsx.jsx
+    │   │   ├── Header.css
+    │   │   ├── Header.jsx.jsx
+    │   │   ├── main.jsx
+    │   │   ├── ProjectCard.css
+    │   │   ├── ProjectCard.jsx.jsx
+    │   │   ├── ProjectList.css
+    │   │   ├── ProjectList.jsx.jsx
+    │   │   ├── TaskCard.css
+    │   │   ├── TaskCard.jsx.jsx
+    │   │   ├── TaskList.css
+    │   │   └── TaskList.jsx.jsx
+    │   └── vite.config.js
+    ├── venv/
+
+    └── __pycache__/
+        ├── app.cpython-312.pyc
+        ├── models.cpython-312.pyc
+        └── services.cpython-312.pyc
 ```
 
 ---
