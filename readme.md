@@ -13,7 +13,7 @@ Built with Flask on the backend and React on the frontend, communicating over a 
 - Tasks are categorized as pending or complete
 - Toggle task status with a checkbox
 - Confirmation dialog before any deletion
-- Created and updated timestamps displayed on projects and tasks
+- Timestamps displayed on projects and tasks for when each was created and updated
 - Floating modal forms — no page navigation required
 - Tasks are automatically linked to the currently selected project
 - Branded header with logo mark and navigation
